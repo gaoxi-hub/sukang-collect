@@ -1,0 +1,31 @@
+server:
+  port: 16105
+spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 300MB
+  application:
+    name: sukang-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/sukangdb?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 10
+      idle-timeout: 180000
+      maximum-pool-size: 50
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+mybatis:
+  mapperLocations: classpath:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com.gao: debug
