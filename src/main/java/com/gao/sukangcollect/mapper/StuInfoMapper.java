@@ -3,6 +3,8 @@ package com.gao.sukangcollect.mapper;
 import com.gao.sukangcollect.domain.StuInfo;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * ClassName: StuInfoMapper
  * Description:
@@ -14,4 +16,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StuInfoMapper {
     StuInfo selectStuByStuId(String stuId);
+
+    List<StuInfo> selectAllStuInfo();
+
+    void updateSubmitTime(String stuId);
+
+    void updateAllSubmitTime();
+
+    List<StuInfo> selectStuQqEamil();
+
+    List<StuInfo> selectNoSubmitStu();
 }

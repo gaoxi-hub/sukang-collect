@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.gao</groupId>
     <artifactId>sukang-collect</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <name>sukang-collect</name>
     <description>Demo project for Spring Boot</description>
 
@@ -38,11 +38,10 @@
             <optional>true</optional>
         </dependency>
 
-
-
-
-
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,6 +1,10 @@
 package com.gao.sukangcollect.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * ClassName: StuInfo
@@ -14,4 +18,7 @@ import lombok.Data;
 public class StuInfo {
     private String stuId;
     private String stuName;
+    @JsonFormat(pattern = "HH:mm:ss",timezone="GMT+8")
+    private Date submitTime;
+    private String qqMail;
 }

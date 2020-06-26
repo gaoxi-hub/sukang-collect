@@ -5,13 +5,14 @@
     <title>苏康码提交</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-12">
-            <form role="form" enctype="multipart/form-data" action="/submitPic" method="post">
+            <form role="form" id="submitPicForm" enctype="multipart/form-data" action="/submitPic" method="post">
                 <div class="form-group" >
                     <label for="stuId">学号</label>
                     <input type="text" id="stuId" class="form-control" name="stuId" placeholder="学号">
@@ -21,7 +22,7 @@
                     <input type="file" id="inputfile" name="picfile">
                     <p class="help-block">选择就行了，不用命名。</p>
                 </div>
-                <button type="submit" class="btn btn-block btn-success">提交</button>
+                <button type="button" class="btn btn-block btn-success" id="submitMyPic">提交</button>
             </form>
         </div>
     </div>
@@ -38,21 +39,44 @@
                     <span>{{nowFinishStatus}}</span>
                 </div>
             </div>
-
             <form action="/download" method="get">
                 <input type="submit" class="btn btn-warning btn-block" value="下载班级苏康码zip包">
             </form>
-
         </div>
     </div>
 </div>
 
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <table class="table table-striped">
+                <caption>今日提交记录</caption>
+                <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>今日提交时间</th>
+                </tr>
+                </thead>
+                <tbody id="tableinfo">
+                <tr v-for="item in stuInfos" v-bind:class="item.submitTime!=null?'success':''">
+                    <td>{{item.stuId}}</td>
+                    <td>{{item.stuName}}</td>
+                    <td>{{item.submitTime}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <script src="js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+
+
 
     var app=new Vue({
         el:"#finishStatus",
@@ -75,6 +99,58 @@
                 that.finishNum=value.data });
         }
     })
+
+    var app2=new Vue({
+        el:"#tableinfo",
+        data:{
+                stuInfos:[]
+        },
+        mounted:function () {
+            var that=this;
+            axios.get('/getSubmitRecord').then(function (value) {
+                that.stuInfos=value.data });
+        }
+    })
+
+
+
+
+
+
+    $("#submitMyPic").click(function () {
+        var form = new FormData(document.getElementById("submitPicForm"));
+        $.ajax({
+            type :"post",
+            url : "/submitPic",
+            data : form,
+            processData:false,
+            //告诉jQuery不要去设置Content-Type请求头,因为表单已经设置了multipart/form-data
+            contentType:false,
+            success :function (res) {
+                if(res=="success"){
+                    swal({
+                        title: "提交提示",
+                        text: "成功提交",
+                        icon: "success",
+                    });
+                }else {
+                    swal({
+                        title: "提交提示",
+                        text: "提交失败.审查学号和文件",
+                        icon: "error",
+                    });
+                }
+            },
+            error:function () {
+                swal({
+                    title: "错误提示",
+                    text: "连接服务器失败",
+                    icon: "error",
+                });
+            }
+        })
+    });
+
 
 </script>
 </body>

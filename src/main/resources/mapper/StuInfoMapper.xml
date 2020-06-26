@@ -3,7 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gao.sukangcollect.mapper.StuInfoMapper">
+
+    <update id="updateSubmitTime">
+        update stu_info set submit_time=NOW() where stu_id=#{stuId}
+    </update>
+    <update id="updateAllSubmitTime">
+        update stu_info set submit_time=null;
+    </update>
     <select id="selectStuByStuId" resultType="com.gao.sukangcollect.domain.StuInfo">
         select * from stu_info where stu_id=#{stuId}
+    </select>
+    <select id="selectAllStuInfo" resultType="com.gao.sukangcollect.domain.StuInfo">
+        select * from stu_info order by submit_time DESC
+    </select>
+    <select id="selectStuQqEamil" resultType="com.gao.sukangcollect.domain.StuInfo">
+        select * from stu_info
+    </select>
+    <select id="selectNoSubmitStu" resultType="com.gao.sukangcollect.domain.StuInfo">
+        select * from stu_info where submit_time is null
     </select>
 </mapper>
