@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/jquery-3.3.1.min.js"></script>
 </head>
+<style>
+    [v-cloak]{
+        display: none;
+    }
+</style>
 <body>
 
 <div class="container">
@@ -59,7 +64,7 @@
                 </tr>
                 </thead>
                 <tbody id="tableinfo">
-                <tr v-for="item in stuInfos" v-bind:class="item.submitTime!=null?'success':''">
+                <tr v-for="item in stuInfos" v-cloak v-bind:class="item.submitTime!=null?'success':''">
                     <td>{{item.stuId}}</td>
                     <td>{{item.stuName}}</td>
                     <td>{{item.submitTime}}</td>
@@ -132,13 +137,17 @@
                         title: "提交提示",
                         text: "成功提交",
                         icon: "success",
+                    }).then((value) => {
+                        window.location.reload();
                     });
                 }else {
                     swal({
                         title: "提交提示",
                         text: "提交失败.审查学号和文件",
                         icon: "error",
-                    });
+                    }).then((value) => {
+                        window.location.reload();
+                   });
                 }
             },
             error:function () {
