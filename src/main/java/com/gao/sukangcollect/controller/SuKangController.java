@@ -96,7 +96,7 @@ public class SuKangController {
                 return;
             }
             response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(nowTime+"班级苏康码.zip", "UTF-8"));
-            ZipUtils.toZip(file.getPath(),response.getOutputStream(),true);
+            ZipUtils.toZip(file.getPath(),response.getOutputStream(),false);
         }catch (Exception e){
             e.printStackTrace();
         }

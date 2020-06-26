@@ -23,7 +23,7 @@ public interface StuInfoMapper {
 
     void updateAllSubmitTime();
 
-    List<StuInfo> selectStuQqEamil();
+    List<StuInfo> selectStuQqEamil(int start);
 
-    List<StuInfo> selectNoSubmitStu();
+    List<StuInfo> selectNoSubmitStuAll();
 }

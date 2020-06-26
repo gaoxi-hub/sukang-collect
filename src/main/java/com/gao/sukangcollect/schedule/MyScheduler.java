@@ -2,11 +2,8 @@ package com.gao.sukangcollect.schedule;
 
 import com.gao.sukangcollect.domain.StuInfo;
 import com.gao.sukangcollect.mapper.StuInfoMapper;
+import com.gao.sukangcollect.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -26,82 +23,278 @@ public class MyScheduler {
     @Resource
     private StuInfoMapper stuInfoMapper;
     @Autowired
-    private JavaMailSender javaMailSender;
-    @Value("${spring.mail.username}")
-    private String sender;
+    private MailService mailService;
+
+
+
     @Scheduled(cron = "0 0 1 * * ?")
     public void clearSubmitTime(){
         stuInfoMapper.updateAllSubmitTime();
     }
 
 
-    @Async
+
     @Scheduled(cron = "0 0 9 * * ?")
     public void amRemind(){
-        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil();
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(0);
+        if(stuInfos.size()==0) {
+            return;
+        }
         for(StuInfo stu:stuInfos)
         {
-            SimpleMailMessage mailMessage=new SimpleMailMessage();
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(stu.getQqMail());
-            mailMessage.setSubject("苏康码上午打卡提醒");
-            mailMessage.setText("上午好,"+stu.getStuName()+"，记得打卡！！");
-            try {
-                javaMailSender.send(mailMessage);
-            }catch (Exception e){
-                e.printStackTrace();
-                System.out.println("发送简单邮件失败"+stu.getStuName());
-            }
+          mailService.amMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 10 9 * * ?")
+    public void amRemind1(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(5);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 20 9 * * ?")
+    public void amRemind2(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(10);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 30 9 * * ?")
+    public void amRemind3(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(15);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 40 9 * * ?")
+    public void amRemind4(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(20);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
         }
     }
 
 
-    @Async
-    @Scheduled(cron = "0 0 14 * * ?")
+    @Scheduled(cron = "0 50 9 * * ?")
+    public void amRemind5(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(25);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
+        }
+    }
+
+
+    @Scheduled(cron = "0 0 10 * * ?")
+    public void amRemind6(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(30);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
+        }
+    }
+
+
+    @Scheduled(cron = "0 10 10 * * ?")
+    public void amRemind7(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(35);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
+        }
+    }
+
+
+    @Scheduled(cron = "0 20 10 * * ?")
+    public void amRemind8(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(40);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 30 10 * * ?")
+    public void amRemind9(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(45);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.amMailSender(stu);
+        }
+    }
+
+
+
+
+    @Scheduled(cron = "0 0 12 * * ?")
     public void pmRemind(){
-        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil();
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(0);
+        if(stuInfos.size()==0) {
+            return;
+        }
         for(StuInfo stu:stuInfos)
         {
-            SimpleMailMessage mailMessage=new SimpleMailMessage();
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(stu.getQqMail());
-            mailMessage.setSubject("苏康码下午打卡提醒");
-            mailMessage.setText("下午好,"+stu.getStuName()+"，记得打卡、交码哟！！");
-            try {
-                javaMailSender.send(mailMessage);
-            }catch (Exception e){
-                e.printStackTrace();
-                System.out.println("发送简单邮件失败"+stu.getStuName());
-            }
+            mailService.pmMailSender(stu);
         }
     }
 
 
-    @Async
+    @Scheduled(cron = "0 10 12 * * ?")
+    public void pmRemind1(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(5);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+
+    @Scheduled(cron = "0 15 12 * * ?")
+    public void pmRemind2(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(10);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+
+    @Scheduled(cron = "0 20 12 * * ?")
+    public void pmRemind3(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(15);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+
+    @Scheduled(cron = "0 0 14 * * ?")
+    public void pmRemind4(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(20);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 10 14 * * ?")
+    public void pmRemind5(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(25);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 20 14 * * ?")
+    public void pmRemind6(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(30);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 30 14 * * ?")
+    public void pmRemind7(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(35);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 40 14 * * ?")
+    public void pmRemind8(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(40);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+    @Scheduled(cron = "0 50 14 * * ?")
+    public void pmRemind9(){
+        List<StuInfo> stuInfos = stuInfoMapper.selectStuQqEamil(45);
+        if(stuInfos.size()==0) {
+            return;
+        }
+        for(StuInfo stu:stuInfos)
+        {
+            mailService.pmMailSender(stu);
+        }
+    }
+
+
     @Scheduled(cron = "0 0 21 * * ?")
     public void lastRemind(){
-        List<StuInfo> stuInfos = stuInfoMapper.selectNoSubmitStu();
+        List<StuInfo> stuInfos = stuInfoMapper.selectNoSubmitStuAll();
+        if(stuInfos.size()==0){
+            return;
+        }
         for(StuInfo stu:stuInfos)
         {
-            SimpleMailMessage mailMessage=new SimpleMailMessage();
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(stu.getQqMail());
-            mailMessage.setSubject("苏康码未交提醒");
-            mailMessage.setText("请赶快提交苏康码！！");
-            try {
-                javaMailSender.send(mailMessage);
-            }catch (Exception e){
-                e.printStackTrace();
-                System.out.println("发送简单邮件失败"+stu.getStuName());
-            }
+           mailService.lastMailSender(stu);
         }
     }
-
-
-
-
-
-
-
-
 }
