@@ -60,14 +60,19 @@
                 <tr>
                     <th>学号</th>
                     <th>姓名</th>
-                    <th>今日提交时间</th>
+                    <th>提交时间</th>
+                    <th>邮件提醒</th>
                 </tr>
                 </thead>
                 <tbody id="tableinfo">
-                <tr v-for="item in stuInfos" v-cloak v-bind:class="item.submitTime!=null?'success':''">
+                <tr v-for="(item,i) in stuInfos" v-cloak v-bind:class="item.submitTime!=null?'success':''">
                     <td>{{item.stuId}}</td>
                     <td>{{item.stuName}}</td>
                     <td>{{item.submitTime}}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-xs" v-if="closeMailBtn(i)" v-on:click="closeRemind(i)">关闭提醒</button>
+                        <button type="button" class="btn btn-primary btn-xs" v-if="openMailBtn(i)" v-on:click="openRemind(i)">开启提醒</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -109,6 +114,30 @@
         el:"#tableinfo",
         data:{
                 stuInfos:[]
+        },
+        methods:{
+            openMailBtn:function(index){
+                if(this.stuInfos[index].openReminder==1){
+                    return false;
+                }else{
+                    return true;
+                }
+            },
+            closeMailBtn:function(index){
+                if(this.stuInfos[index].openReminder==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            },
+            closeRemind:function (index) {
+                openOrCloseRemind(this.stuInfos[index].stuId)
+            },
+            openRemind:function (index) {
+                openOrCloseRemind(this.stuInfos[index].stuId)
+            }
+
+
         },
         mounted:function () {
             var that=this;
@@ -159,6 +188,52 @@
             }
         })
     });
+
+    function openOrCloseRemind(stuId) {
+        $.ajax({
+            type :"get",
+            url : "/openOrCloseRemind",
+            data : {"stuId":stuId},
+            success :function (res) {
+                if(res=="success"){
+                    swal({
+                        title: "提示",
+                        text: "设置成功",
+                        icon: "success",
+                    }).then((value) => {
+                        window.location.reload();
+                });
+                }else {
+                    swal({
+                        title: "提示",
+                        text: "设置失败",
+                        icon: "error",
+                    }).then((value) => {
+                        window.location.reload();
+                });
+                }
+            },
+            error:function () {
+                swal({
+                    title: "错误提示",
+                    text: "连接服务器失败",
+                    icon: "error",
+                });
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </script>

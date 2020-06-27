@@ -10,6 +10,9 @@
     <update id="updateAllSubmitTime">
         update stu_info set submit_time=null;
     </update>
+    <update id="updateRemind">
+        update stu_info set open_reminder=#{i} where stu_id=#{stuId}
+    </update>
     <select id="selectStuByStuId" resultType="com.gao.sukangcollect.domain.StuInfo">
         select * from stu_info where stu_id=#{stuId}
     </select>
@@ -17,7 +20,7 @@
         select * from stu_info order by submit_time DESC
     </select>
     <select id="selectStuQqEamil" resultType="com.gao.sukangcollect.domain.StuInfo">
-        select * from stu_info order by stu_id limit #{start},5
+        select * from stu_info where open_reminder=1 order by stu_id limit #{start},5
     </select>
     <select id="selectNoSubmitStuAll" resultType="com.gao.sukangcollect.domain.StuInfo">
         select * from stu_info where submit_time is null

@@ -21,4 +21,5 @@ public class StuInfo {
     @JsonFormat(pattern = "HH:mm:ss",timezone="GMT+8")
     private Date submitTime;
     private String qqMail;
+    private Integer openReminder;
 }

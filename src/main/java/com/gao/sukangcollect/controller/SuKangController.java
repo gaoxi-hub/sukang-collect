@@ -107,4 +107,25 @@ public class SuKangController {
     public List<StuInfo> getSubmitRecord(){
         return stuInfoMapper.selectAllStuInfo();
     }
+
+
+    @ResponseBody
+    @RequestMapping("openOrCloseRemind")
+    public String openOrCloseRemind(String stuId){
+        try{
+            StuInfo stuInfo = stuInfoMapper.selectStuByStuId(stuId);
+            if(stuInfo.getOpenReminder()==1){
+                stuInfoMapper.updateRemind(stuId,0);
+            }else{
+                stuInfoMapper.updateRemind(stuId,1);
+            }
+            return "success";
+        }catch(Exception e){
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+
+
+
 }

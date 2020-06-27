@@ -1,6 +1,7 @@
 package com.gao.sukangcollect.mapper;
 
 import com.gao.sukangcollect.domain.StuInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface StuInfoMapper {
     List<StuInfo> selectStuQqEamil(int start);
 
     List<StuInfo> selectNoSubmitStuAll();
+
+    void updateRemind(@Param("stuId") String stuId,@Param("i") int i);
 }
