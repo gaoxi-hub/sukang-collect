@@ -42,6 +42,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
           mailService.amMailSender(stu);
         }
     }
@@ -54,6 +57,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -66,6 +72,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -78,6 +87,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -90,6 +102,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -103,6 +118,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -116,6 +134,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -129,6 +150,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -142,6 +166,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -154,6 +181,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.amMailSender(stu);
         }
     }
@@ -169,6 +199,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -182,6 +215,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -195,6 +231,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -208,6 +247,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -221,6 +263,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -233,6 +278,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -245,6 +293,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -257,6 +308,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -269,6 +323,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
@@ -281,6 +338,9 @@ public class MyScheduler {
         }
         for(StuInfo stu:stuInfos)
         {
+            if(stu.getOpenReminder()==0||stu.getSubmitTime()!=null){
+                continue;
+            }
             mailService.pmMailSender(stu);
         }
     }
