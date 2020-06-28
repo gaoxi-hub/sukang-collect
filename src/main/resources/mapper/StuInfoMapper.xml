@@ -23,6 +23,6 @@
         select * from stu_info order by stu_id limit #{start},5
     </select>
     <select id="selectNoSubmitStuAll" resultType="com.gao.sukangcollect.domain.StuInfo">
-        select * from stu_info where submit_time is null
+        select * from stu_info where submit_time is null and open_reminder=1
     </select>
 </mapper>

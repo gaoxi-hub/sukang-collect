@@ -32,7 +32,7 @@ public class MailService {
         mailMessage.setCc(sender);
         mailMessage.setTo(stu.getQqMail());
         mailMessage.setSubject("苏康码上午打卡提醒");
-        mailMessage.setText("上午好,"+stu.getStuName()+"，记得打卡,这次打卡不用提交！！");
+        mailMessage.setText("上午好,"+stu.getStuName()+"，记得上午打卡呦！！");
         try {
             javaMailSender.send(mailMessage);
         }catch (Exception e){
@@ -65,7 +65,7 @@ public class MailService {
         mailMessage.setCc(sender);
         mailMessage.setTo(stu.getQqMail());
         mailMessage.setSubject("苏康码未交提醒");
-        mailMessage.setText("请赶快提交苏康码！！");
+        mailMessage.setText(stu.getStuName()+"同学，请赶快提交苏康码！！"+"上传地址："+"http://39.107.250.200:16105/");
         try {
             javaMailSender.send(mailMessage);
         }catch (Exception e){
