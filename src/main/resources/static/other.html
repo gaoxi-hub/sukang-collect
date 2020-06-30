@@ -13,7 +13,16 @@
     }
 </style>
 <body>
-
+<div style="height: 8px"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <div class="alert alert-info">
+                这里提交行程轨迹的哟
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-12">
@@ -23,12 +32,12 @@
                     <input type="text" id="stuId" class="form-control" name="stuId" placeholder="学号">
                 </div>
                 <div class="form-group">
-                    <label for="inputfile">选择手机上的苏康码</label>
+                    <label for="inputfile">选择手机上的行程轨迹</label>
                     <input type="file" id="inputfile" name="picfile">
                     <p class="help-block">选择就行了，不用命名。</p>
                 </div>
-                <button type="button" class="btn btn-block btn-success" id="submitMyPic">提交</button>
-                <button type="button" class="btn btn-block btn-info" id="submitMyOrbit">我要去提交行程轨迹</button>
+                <button type="button" class="btn btn-block btn-info" id="submitMyPic">提交</button>
+                <a href="index.html" class="btn btn-block btn-primary">去提交苏康码</a>
             </form>
         </div>
     </div>
@@ -39,71 +48,33 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12">
             <div class="progress progress-striped active">
-                <div class="progress-bar progress-bar-success" role="progressbar"
+                <div class="progress-bar progress-bar-danger" role="progressbar"
                      aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
                      v-bind:style="nowProcess()" id="finishStatus">
                     <span>{{nowFinishStatus}}</span>
                 </div>
             </div>
-            <form action="/download" method="get">
-                <input type="submit" class="btn btn-warning btn-block" value="下载班级苏康码zip包">
+            <form action="/download1" method="get">
+                <input type="submit" class="btn btn-success btn-block" value="下载班级行程轨迹zip包">
             </form>
-        </div>
-    </div>
-</div>
-
-<div style="height: 8px"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12">
-            <div class="alert alert-info">
-                每日打卡会上下午各提醒一次<br>
-                上午打卡提醒时间：9：00~10：30<br>
-                下午打卡提醒时间：12：00~12：20或14：00~15:30<br>
-                晚上9点后未提交，会对未提交的人发送提醒<br>
-                可以在自己选择开启、关闭打卡提醒.选择关闭后会关闭以上所有提醒<br>
-                祝大家使用愉快！！！
+            <div style="height: 8px"></div>
+            <div class="btn-group">
+                <a type="button" class="btn btn-success" href="https://app.10086.cn/activity/epidemicQuery/index.html?WT.ac_id=20200210AYQCXZS_044">移动查询入口</a>
+                <a type="button" class="btn btn-info" href="https://wapact.189.cn:9001/epidemicTravel/epidemicTravel_index.html">电信查询入口</a>
+                <a type="button" class="btn btn-warning" href="http://search.cubigdata.cn:32533/#/checkPage">联通查询入口</a>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12">
-            <table class="table table-striped">
-                <caption>今日提交记录</caption>
-                <thead>
-                <tr>
-                    <th>学号</th>
-                    <th>姓名</th>
-                    <th>提交时间</th>
-                    <th>邮件提醒</th>
-                </tr>
-                </thead>
-                <tbody id="tableinfo">
-                <tr v-for="(item,i) in stuInfos" v-cloak v-bind:class="item.submitTime!=null?'success':''">
-                    <td>{{item.stuId}}</td>
-                    <td>{{item.stuName}}</td>
-                    <td>{{item.submitTime}}</td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-xs" v-if="closeMailBtn(i)" v-on:click="closeRemind(i)">关闭提醒</button>
-                        <button type="button" class="btn btn-primary btn-xs" v-if="openMailBtn(i)" v-on:click="openRemind(i)">开启提醒</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+
+
 
 <script src="js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-
-
 
     var app=new Vue({
         el:"#finishStatus",
@@ -122,12 +93,12 @@
         },
         mounted:function () {
             var that=this;
-            axios.get('/getSubmitNum').then(function (value) {
+            axios.get('/getSubmitNum1').then(function (value) {
                 that.finishNum=value.data });
         }
     })
 
-    var app2=new Vue({
+/*    var app2=new Vue({
         el:"#tableinfo",
         data:{
                 stuInfos:[]
@@ -161,14 +132,8 @@
             axios.get('/getSubmitRecord').then(function (value) {
                 that.stuInfos=value.data });
         }
-    })
+    })*/
 
-
-
-
-    $("#submitMyOrbit").click(function () {
-        window.location.href="other.html";
-    })
 
 
 
@@ -176,7 +141,7 @@
         var form = new FormData(document.getElementById("submitPicForm"));
         $.ajax({
             type :"post",
-            url : "/submitPic",
+            url : "/submitPicOrbit",
             data : form,
             processData:false,
             //告诉jQuery不要去设置Content-Type请求头,因为表单已经设置了multipart/form-data
@@ -209,53 +174,6 @@
             }
         })
     });
-
-    function openOrCloseRemind(stuId) {
-        $.ajax({
-            type :"get",
-            url : "/openOrCloseRemind",
-            data : {"stuId":stuId},
-            success :function (res) {
-                if(res=="success"){
-                    swal({
-                        title: "提示",
-                        text: "设置成功",
-                        icon: "success",
-                    }).then((value) => {
-                        window.location.reload();
-                });
-                }else {
-                    swal({
-                        title: "提示",
-                        text: "设置失败",
-                        icon: "error",
-                    }).then((value) => {
-                        window.location.reload();
-                });
-                }
-            },
-            error:function () {
-                swal({
-                    title: "错误提示",
-                    text: "连接服务器失败",
-                    icon: "error",
-                });
-            }
-        })
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>
 </body>

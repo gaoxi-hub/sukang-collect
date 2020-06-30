@@ -5,6 +5,7 @@ import com.gao.sukangcollect.mapper.StuInfoMapper;
 import com.gao.sukangcollect.util.ZipUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,6 +48,23 @@ public class SuKangController {
         String[] list = file.list();
         return list.length;
     }
+
+
+    @ResponseBody
+    @RequestMapping("getSubmitNum1")
+    public int getSubmitNum1(){
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String nowTime = dateTimeFormatter.format(now);
+        File file = new File("/home/"+nowTime+"Orbit");
+        if(!file.exists()){
+            file.mkdir();
+            return 0;
+        }
+        String[] list = file.list();
+        return list.length;
+    }
+
     /**
      * 提交图片
      */
@@ -83,6 +101,40 @@ public class SuKangController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping("submitPicOrbit")
+    public String submitPicOrbit(String stuId, MultipartFile picfile){
+        try {
+            StuInfo stuInfo = stuInfoMapper.selectStuByStuId(stuId);
+            if(picfile.getSize()<=0){
+                return "fail";
+            }
+            LocalDate now = LocalDate.now();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String nowTime = dateTimeFormatter.format(now);
+            File file = new File("/home/"+nowTime+"Orbit");
+            if(!file.exists())
+            {
+                file.mkdir();
+            }
+            File file1=null;
+            if(specialStuId.contains(stuId)){
+                file1 = new File("/home/" + nowTime + "Orbit/" + stuId.substring(9)+stuInfo.getStuName().trim() + "-行程轨迹.jpg");
+            }else{
+                file1 = new File("/home/" + nowTime + "Orbit/" + stuInfo.getStuName().trim() + "-行程轨迹.jpg");
+            }
+
+            picfile.transferTo(file1);
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+
+
+
+
 
     @RequestMapping("download")
     public void download(HttpServletRequest request, HttpServletResponse response){
@@ -101,6 +153,28 @@ public class SuKangController {
             e.printStackTrace();
         }
     }
+
+
+
+    @RequestMapping("download1")
+    public void download1(HttpServletRequest request, HttpServletResponse response){
+        try{
+            LocalDate now = LocalDate.now();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String nowTime = dateTimeFormatter.format(now);
+            File file = new File("/home/"+nowTime+"Orbit");
+            if(!file.exists())
+            {
+                return;
+            }
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(nowTime+"班级行程轨迹.zip", "UTF-8"));
+            ZipUtils.toZip(file.getPath(),response.getOutputStream(),false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 
     @ResponseBody
     @RequestMapping("getSubmitRecord")
